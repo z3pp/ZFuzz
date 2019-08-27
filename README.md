@@ -1,5 +1,5 @@
 # ZFuzz
-[![Python](https://img.shields.io/badge/python-3.7-20d47a?style=flat-square)](https://python.org/) [![License](https://img.shields.io/badge/license-GPLv3-4ab0d9?style=flat-square)](https://github.com/z3pp/ZFuzz/blob/master/LICENSE) [![License](https://img.shields.io/badge/release-1.2-lightgrey?style=flat-square)](https://github.com/z3pp/ZFuzz/) 
+[![Python](https://img.shields.io/badge/python-3.7-20d47a?style=flat-square)](https://python.org/) [![License](https://img.shields.io/badge/license-GPLv3-4ab0d9?style=flat-square)](https://github.com/z3pp/ZFuzz/blob/master/LICENSE) [![Release](https://img.shields.io/badge/release-1.2-lightgrey?style=flat-square)](https://github.com/z3pp/ZFuzz/) [![Build Status](https://img.shields.io/travis/z3pp/ZFuzz/master?style=flat-square)](https://travis-ci.org/z3pp/ZFuzz)
 
 ZFuzz is an opensource web fuzzer written in Python (See [Wfuzz](https://wfuzz.readthedocs.io/) for more advanced features)
 
