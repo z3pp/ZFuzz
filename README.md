@@ -25,20 +25,16 @@ $ zfuzz.py -w /mywordlist -u https://example.com/^FUZZ^ --sc 200
 
 ```
 
-### Features
-- Multithreaded
-- Allows fuzzing of HTTP headers, POST data, cookies, and different parts of URL
-- Very simple architecture/code so you can easily contribute to the project
-- Easy to use and a nice interface
- 
-ZFuzz needs Python v3 to work, and it must be run on Linux
-
 ### Installation
-You can easily install zfuzz using these commands:
+You can easily install zfuzz by following these commands:
 ```
 $ git clone https://github.com/z3pp/ZFuzz.git
 $ cd ZFuzz
 $ python setup.py install
 ```
+ZFuzz needs Python v3 to work, and it must be run on Linux
+
+### Documentation
+The documentation is available at http://zfuzz.readthedocs.io
 
 Enjoy ;)
