@@ -81,8 +81,8 @@ class Fuzz(object):
                                      f"[{color}{code}"
                                      f"{self.colors.default}]: {i}\n")
 
-            except Exception as e:
-                print(e)
+            except Exception:
+                pass
 
             finally:
                 q.task_done()
