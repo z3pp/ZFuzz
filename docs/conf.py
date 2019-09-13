@@ -5,7 +5,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath('../'))
 
-import zfuzz
+import zfuzz  # noqa: E402,F401
 
 
 project = 'ZFuzz'
