@@ -30,7 +30,7 @@ class Fuzz(object):
     """
 
     def __init__(self, url, wordlist, headers, data, cookies, threads,
-                 keyword, timeout, delay, hc, sc, hs, ss):
+                 keyword, timeout, delay, follow, hc, sc, hs, ss):
 
         self.colors = ZFuzzCLI()
 
@@ -42,6 +42,7 @@ class Fuzz(object):
         self._threads = threads
         self._keyword = keyword
         self._timeout = timeout
+        self._follow = follow
         self._delay = delay
         self._hc = hc
         self._sc = sc
@@ -67,7 +68,8 @@ class Fuzz(object):
             cookies = replace_kv_dict(self._cookies.copy(), self._keyword, i)
             try:
                 res = self._method(link, headers=headers, data=data,
-                                   cookies=cookies, timeout=self._timeout)
+                                   cookies=cookies, timeout=self._timeout,
+                                   allow_redirects=self._follow)
 
                 time.sleep(self._delay)
                 code = res.status_code

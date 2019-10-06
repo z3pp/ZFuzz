@@ -17,7 +17,7 @@ class ZFuzzCLI(object):
         self.bold = attr("bold")
         self.red = fg(161) + self.bold
         self.green = fg(77) + self.bold
-        self.grey = fg(8) + self.bold
+        self.grey = fg(245) + self.bold
         self.blue = fg(69) + self.bold
         self.magenta = fg(200) + self.bold
         self.default = attr("reset")
@@ -48,6 +48,7 @@ class ZFuzzCLI(object):
     [-k/--keyword]   -- Fuzzing keyword to use. Default ^FUZZ^
     [-t/--threads]   -- Number of threads. Default 35
     [-s/--delay]     -- Delay between requests
+    [-r/--follow]    -- Follow HTTP redirection
     [--timeout]      -- Requests timeout
     [--hc/sc]        -- HTTP Code(s) to hide/show
     [--hs/ss]        -- Response to hide/show with the given str
@@ -93,6 +94,9 @@ class ZFuzzCLI(object):
 
         parser.add_argument("-s", "--delay",
                             type=float, default=0)
+
+        parser.add_argument("-r", "--follow",
+                            action="store_true")
 
         parser.add_argument("--timeout",
                             type=float)
