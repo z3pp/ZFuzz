@@ -15,11 +15,11 @@ class ZFuzzCLI(object):
 
     def __init__(self):
         self.bold = attr("bold")
-        self.red = fg(161) + self.bold
-        self.green = fg(77) + self.bold
-        self.grey = fg(245) + self.bold
-        self.blue = fg(69) + self.bold
-        self.magenta = fg(200) + self.bold
+        self.red = fg(203)
+        self.green = fg(77)
+        self.grey = fg(245)
+        self.blue = fg(69)
+        self.magenta = fg(170) + self.bold
         self.default = attr("reset")
 
     def print_banner(self):
@@ -131,5 +131,4 @@ class ZFuzzCLI(object):
         try:
             Fuzz(**vars(args))
         except KeyboardInterrupt:
-            sys.stdout.close()
             sys.exit(1)

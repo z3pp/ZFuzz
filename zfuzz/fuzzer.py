@@ -1,8 +1,8 @@
-import sys
 import threading
 import time
 import queue
 import requests
+from pwn import log
 
 from .utils import replace_kv_dict
 from .utils import get_code_color
@@ -77,11 +77,7 @@ class Fuzz(object):
                                self._hs, self._ss):
 
                     color = get_code_color(code)
-                    sys.stdout.write(f"{self.colors.blue}["
-                                     f"{time.strftime('%M:%S', time.gmtime())}"
-                                     f"]{self.colors.default} "
-                                     f"[{color}{code}"
-                                     f"{self.colors.default}]: {i}\n")
+                    log.warn(f"[{color}{code}{self.colors.default}]: {i}\n")
 
             except Exception:
                 pass
@@ -99,9 +95,7 @@ class Fuzz(object):
         for line in lines:
             q.put(line.rstrip('\n\r'))
 
-        print(f"{self.colors.magenta}[TARGET] "
-              f"{self.colors.default}"
-              f"{self._url.replace(self._keyword, '<fuzz>')}")
+        log.info("Target: {}".format(self._url.replace("^FUZZ^", "<fuzz>")))
         print()
 
         # Start Fuzzing :)
@@ -116,7 +110,6 @@ class Fuzz(object):
         q.join()
         new_time = time.time()
         print()
-        print(f"{self.colors.blue}"
-              f"[{time.strftime('%M:%S', time.gmtime())}]"
-              f"{self.colors.default} Total time: {int(new_time - old_time)}s")
+        log.success(f"Scan completed successfully in "
+                    f"{int(new_time - old_time)}s")
         print()
