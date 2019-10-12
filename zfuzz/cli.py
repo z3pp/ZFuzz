@@ -17,7 +17,6 @@ class ZFuzzCLI(object):
         self.bold = attr("bold")
         self.red = fg(203)
         self.green = fg(77)
-        self.grey = fg(245)
         self.blue = fg(69)
         self.magenta = fg(170) + self.bold
         self.default = attr("reset")

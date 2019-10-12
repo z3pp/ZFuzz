@@ -32,7 +32,7 @@ def get_code_color(code):
     if code in range(200, 299):
         color = colors.green
     elif code in range(300, 399):
-        color = colors.grey
+        color = colors.blue
     else:
         color = colors.red
     return color
