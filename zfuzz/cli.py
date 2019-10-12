@@ -2,11 +2,11 @@ import sys
 import argparse
 from colored import fg, attr
 
-from .action import RangeAction
-from .action import UrlAction
-from .action import DictAction
-from .action import ListAction
-from .action import DataAction
+from .actions import RangeAction
+from .actions import UrlAction
+from .actions import DictAction
+from .actions import ListAction
+from .actions import DataAction
 
 
 class ZFuzzCLI(object):
