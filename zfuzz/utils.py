@@ -40,7 +40,7 @@ def get_code_color(code):
     return color
 
 
-def is_matching(code, hc, sc, content, hs, ss, hr, sr):
+def is_matching(code, hc, sc, content, lenght, hs, ss, hr, sr, hl, sl):
 
     """ Determinate if the given response match the given filters
 
@@ -72,4 +72,9 @@ def is_matching(code, hc, sc, content, hs, ss, hr, sr):
         ret = False if re.match(hr, content) else ret
     if sr is not None:
         ret = ret if re.match(sr, content) else False
+
+    if hl is not None:
+        ret = False if hl == lenght else ret
+    if sl is not None:
+        ret = ret if sl == lenght else False
     return ret

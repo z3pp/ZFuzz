@@ -38,8 +38,8 @@ class ZFuzzCLI(object):
 
         """ Print the help banner """
 
-        helpstr = """{}Usage: {} [OPTIONS] [WORDLIST] [URL]
-\nZFuzz Options:{}
+        helpstr = f"""{self.bold}Usage: {sys.argv[0]} [OPTIONS] [WORDLIST] [URL]
+\nZFuzz Options:{self.default}
     [-h/--help]      -- Print this help message
     [-u/--url]       -- URL to fuzz
     [-w/--wordlist]  -- wordlist
@@ -56,7 +56,8 @@ class ZFuzzCLI(object):
     [--hc/sc]        -- HTTP Code(s) to hide/show
     [--hs/ss]        -- Response to hide/show that match with the given str
     [--hr/sr]        -- Response to hide/show that match with the given regex
-    """.format(self.bold, sys.argv[0], self.default)
+    [--hl/sl]        -- Response lenght to hide/show
+    """
 
         self.print_banner()
         print(helpstr)
@@ -127,6 +128,12 @@ class ZFuzzCLI(object):
 
         parser.add_argument("--sr",
                             type=str)
+
+        parser.add_argument("--hl",
+                            type=int)
+
+        parser.add_argument("--sl",
+                            type=int)
 
         return parser.parse_args(argv)
 
