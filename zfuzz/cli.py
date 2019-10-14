@@ -45,16 +45,17 @@ class ZFuzzCLI(object):
     [-w/--wordlist]  -- wordlist
     [-H/--headers]   -- HTTP headers
     [-d/--data]      -- POST data
-    [-X/--verb]      -- HTTP verb
-    [-b/--cookies]   -- Cookie to send for the requests
-    [-k/--keyword]   -- Fuzzing keyword to use. Default ^FUZZ^
+    [-X/--verb]      -- HTTP verb. Default get
+    [-b/--cookies]   -- Cookie to send
+    [-k/--keyword]   -- Fuzzing keyword. Default ^FUZZ^
     [-t/--threads]   -- Number of threads. Default 35
     [-s/--delay]     -- Delay between requests
     [-r/--follow]    -- Follow HTTP redirection
     [--quiet]        -- Do not print additional information
     [--timeout]      -- Requests timeout
     [--hc/sc]        -- HTTP Code(s) to hide/show
-    [--hs/ss]        -- Response to hide/show with the given str
+    [--hs/ss]        -- Response to hide/show that match with the given str
+    [--hr/sr]        -- Response to hide/show that match with the given regex
     """.format(self.bold, sys.argv[0], self.default)
 
         self.print_banner()
@@ -119,6 +120,12 @@ class ZFuzzCLI(object):
                             type=str)
 
         parser.add_argument("--ss",
+                            type=str)
+
+        parser.add_argument("--hr",
+                            type=str)
+
+        parser.add_argument("--sr",
                             type=str)
 
         return parser.parse_args(argv)

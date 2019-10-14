@@ -31,11 +31,13 @@ class Fuzz(object):
         :param sc: HTTP Code(s) to show
         :param hs: Hide reponse with the given str
         :param ss: Show reponse with the given str
+        :param hr: Hide response with the given regex
+        :param sr: Show response with the given regex
     """
 
     def __init__(self, url, wordlist, headers, data, verb,
                  cookies, threads, keyword, timeout, delay,
-                 follow, quiet, hc, sc, hs, ss):
+                 follow, quiet, hc, sc, hs, ss, hr, sr):
 
         self.clrs = ZFuzzCLI()
 
@@ -54,6 +56,8 @@ class Fuzz(object):
         self._sc = sc
         self._hs = hs
         self._ss = ss
+        self._hr = hr
+        self._sr = sr
 
         self._method = (requests.post if data and verb.lower() == "get"
                         else eval("requests." + verb.lower()))
@@ -81,7 +85,7 @@ class Fuzz(object):
                 time.sleep(self._delay)
                 code = res.status_code
                 if is_matching(code, self._hc, self._sc, str(res.content),
-                               self._hs, self._ss):
+                               self._hs, self._ss, self._hr, self._sr):
 
                     color = get_code_color(code)
                     if not self._quiet:
@@ -89,8 +93,8 @@ class Fuzz(object):
                     else:
                         sys.stdout.write(i + '\n')
 
-            except Exception:
-                pass
+            except Exception as e:
+                print(e)
 
             finally:
                 q.task_done()

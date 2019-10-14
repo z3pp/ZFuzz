@@ -1,3 +1,5 @@
+import re
+
 from zfuzz.cli import ZFuzzCLI
 
 
@@ -38,7 +40,7 @@ def get_code_color(code):
     return color
 
 
-def is_matching(code, hc, sc, content, hs, ss):
+def is_matching(code, hc, sc, content, hs, ss, hr, sr):
 
     """ Determinate if the given response match the given filters
 
@@ -48,6 +50,8 @@ def is_matching(code, hc, sc, content, hs, ss):
         :param content: Response content
         :param hs: Hide response with hs
         :param ss: Show response with ss
+        :param hr: Hide reponse with hr (regex)
+        :param sr: Show reponse with sr (regex)
 
         :returns: True/False, depending of the filter
     """
@@ -63,4 +67,9 @@ def is_matching(code, hc, sc, content, hs, ss):
         ret = False if hs in content else ret
     if ss is not None:
         ret = ret if ss in content else False
+
+    if hr is not None:
+        ret = False if re.match(hr, content) else ret
+    if sr is not None:
+        ret = ret if re.match(sr, content) else False
     return ret
