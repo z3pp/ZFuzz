@@ -1,6 +1,8 @@
 import sys
+import time
 import argparse
 from colored import fg, attr
+from pwn import log
 
 from .actions import RangeAction
 from .actions import UrlAction
@@ -48,6 +50,7 @@ class ZFuzzCLI(object):
     [-t/--threads]   -- Number of threads. Default 35
     [-s/--delay]     -- Delay between requests
     [-r/--follow]    -- Follow HTTP redirection
+    [--quiet]        -- Do not print additional information
     [--timeout]      -- Requests timeout
     [--hc/sc]        -- HTTP Code(s) to hide/show
     [--hs/ss]        -- Response to hide/show with the given str
@@ -63,8 +66,6 @@ class ZFuzzCLI(object):
             :param argv: Command line arguments list
             :returns: Arguments parsed
         """
-
-        self.print_banner()
 
         parser = argparse.ArgumentParser(add_help=False,
                                          description="Python Web Fuzzer")
@@ -97,6 +98,9 @@ class ZFuzzCLI(object):
         parser.add_argument("-r", "--follow",
                             action="store_true")
 
+        parser.add_argument("--quiet",
+                            action="store_true")
+
         parser.add_argument("--timeout",
                             type=float)
 
@@ -125,9 +129,24 @@ class ZFuzzCLI(object):
 
         if len(argv) <= 1 or "--help" in argv or "-h" in argv:
             self.print_help()
-            exit(1)
+            sys.exit(1)
+
         args = self.parse_args(argv[1:])
+
+        if not args.quiet:
+            self.print_banner()
+            old_time = time.time()
+            log.info("Target: {}".format(args.url.replace("^FUZZ^", "<fuzz>")))
+            print()
+
         try:
             Fuzz(**vars(args))
         except KeyboardInterrupt:
             sys.exit(1)
+
+        if not args.quiet:
+            new_time = time.time()
+            print()
+            log.success(f"Scan completed successfully in "
+                        f"{int(new_time - old_time)}s")
+            print()

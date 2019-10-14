@@ -1,4 +1,5 @@
 import threading
+import sys
 import time
 import queue
 import requests
@@ -16,13 +17,15 @@ class Fuzz(object):
 
         :param url: Url to fuzz
         :param wordlist: Wordlist used
-        :param headers: HTTP Headerss
+        :param headers: HTTP Headers
         :param data: POST Data
         :param cookies: HTTP Cookies
         :param threads: Threads numbers
         :param keyword: Fuzzing keyword to use
         :param timeout: Requests timeout
         :param delay: Delay between requests
+        :param follow: Follow HTTP Requests
+        :param quiet: Do not print additional information
         :param hc: HTTP Code(s) to hide
         :param sc: HTTP Code(s) to show
         :param hs: Hide reponse with the given str
@@ -30,9 +33,9 @@ class Fuzz(object):
     """
 
     def __init__(self, url, wordlist, headers, data, cookies, threads,
-                 keyword, timeout, delay, follow, hc, sc, hs, ss):
+                 keyword, timeout, delay, follow, quiet, hc, sc, hs, ss):
 
-        self.colors = ZFuzzCLI()
+        self.clrs = ZFuzzCLI()
 
         self._url = url
         self._wordlist = wordlist
@@ -42,8 +45,9 @@ class Fuzz(object):
         self._threads = threads
         self._keyword = keyword
         self._timeout = timeout
-        self._follow = follow
         self._delay = delay
+        self._follow = follow
+        self._quiet = quiet
         self._hc = hc
         self._sc = sc
         self._hs = hs
@@ -77,7 +81,10 @@ class Fuzz(object):
                                self._hs, self._ss):
 
                     color = get_code_color(code)
-                    log.warn(f"[{color}{code}{self.colors.default}]: {i}\n")
+                    if not self._quiet:
+                        log.warn(f"[{color}{code}{self.clrs.default}]: {i}\n")
+                    else:
+                        sys.stdout.write(i + '\n')
 
             except Exception:
                 pass
@@ -95,11 +102,6 @@ class Fuzz(object):
         for line in lines:
             q.put(line.rstrip('\n\r'))
 
-        log.info("Target: {}".format(self._url.replace("^FUZZ^", "<fuzz>")))
-        print()
-
-        # Start Fuzzing :)
-        old_time = time.time()
         threads = [threading.Thread(target=self.fuzz, args=(i, q))
                    for i in range(int(self._threads))]
 
@@ -108,8 +110,3 @@ class Fuzz(object):
             t.start()
 
         q.join()
-        new_time = time.time()
-        print()
-        log.success(f"Scan completed successfully in "
-                    f"{int(new_time - old_time)}s")
-        print()
