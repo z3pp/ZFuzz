@@ -19,6 +19,7 @@ class Fuzz(object):
         :param wordlist: Wordlist used
         :param headers: HTTP Headers
         :param data: POST Data
+        :param verb: HTTP verb
         :param cookies: HTTP Cookies
         :param threads: Threads numbers
         :param keyword: Fuzzing keyword to use
@@ -32,8 +33,9 @@ class Fuzz(object):
         :param ss: Show reponse with the given str
     """
 
-    def __init__(self, url, wordlist, headers, data, cookies, threads,
-                 keyword, timeout, delay, follow, quiet, hc, sc, hs, ss):
+    def __init__(self, url, wordlist, headers, data, verb,
+                 cookies, threads, keyword, timeout, delay,
+                 follow, quiet, hc, sc, hs, ss):
 
         self.clrs = ZFuzzCLI()
 
@@ -53,7 +55,8 @@ class Fuzz(object):
         self._hs = hs
         self._ss = ss
 
-        self._method = requests.post if data else requests.get
+        self._method = (requests.post if data and verb.lower() == "get"
+                        else eval("requests." + verb.lower()))
 
         self.run()
 

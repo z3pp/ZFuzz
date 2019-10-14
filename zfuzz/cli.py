@@ -45,6 +45,7 @@ class ZFuzzCLI(object):
     [-w/--wordlist]  -- wordlist
     [-H/--headers]   -- HTTP headers
     [-d/--data]      -- POST data
+    [-X/--verb]      -- HTTP verb
     [-b/--cookies]   -- Cookie to send for the requests
     [-k/--keyword]   -- Fuzzing keyword to use. Default ^FUZZ^
     [-t/--threads]   -- Number of threads. Default 35
@@ -85,6 +86,10 @@ class ZFuzzCLI(object):
 
         parser.add_argument("-d", "--data",
                             type=str, default={}, action=DataAction)
+
+        parser.add_argument("-X", "--verb",
+                            choices=["get", "head", "post", "options", "put"],
+                            type=str, default="get")
 
         parser.add_argument("-b", "--cookies",
                             type=str, default={}, nargs='*', action=DictAction)
