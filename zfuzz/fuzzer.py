@@ -3,7 +3,6 @@ import sys
 import time
 import queue
 import requests
-from pwn import log
 
 from .utils import replace_kv_dict
 from .utils import get_code_color
@@ -41,7 +40,8 @@ class Fuzz(object):
                  threads, keyword, timeout, delay, follow, quiet,
                  hc, sc, hs, ss, hr, sr, hl, sl):
 
-        self.clrs = ZFuzzCLI()
+        self.cli = ZFuzzCLI()
+        self.log = self.cli.log
 
         self._url = url
         self._wordlist = wordlist
@@ -94,7 +94,8 @@ class Fuzz(object):
 
                     color = get_code_color(code)
                     if not self._quiet:
-                        log.warn(f"[{color}{code}{self.clrs.default}]: {i}\n")
+                        state = (f"[{color}{code}{self.cli.default}]: {i}\n")
+                        self.log.warn(state)
                     else:
                         sys.stdout.write(i + '\n')
 
