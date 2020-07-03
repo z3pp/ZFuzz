@@ -42,7 +42,7 @@ class DictAction(argparse.Action):
 
         headers = {}
         for value in values:
-            data = value.split(":")
+            data = value.replace(' ', '').split(":")
             if not len(data) == 2:
                 error = "invalid format: valid format: 'some:value'"
                 raise argparse.ArgumentError(self, error)
